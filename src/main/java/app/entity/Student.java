@@ -1,5 +1,6 @@
 package app.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,7 +22,9 @@ public class Student implements UserDetails
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    private String name,surname,number,username,password;
+    private String name,surname,number,username;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
+    private String password;
     private boolean accountNonExpired=true,accountNonLocked=true,enabled=true,credentialsNonExpired=true;
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
