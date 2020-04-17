@@ -11,25 +11,25 @@ import java.util.List;
 public class AppointmentService
 {
     @Autowired
-    private AppointmentRepository studentRepository;
-    public void save(Appointment student)
+    private AppointmentRepository appointmentRepository;
+    public void save(Appointment appointment)
     {
-        studentRepository.save(student);
+        appointmentRepository.save(appointment);
     }
-    public void update(Appointment student)
+    public void update(Appointment appointment)
     {
-        studentRepository.save(student);
+        appointmentRepository.save(appointment);
     }
     public Appointment findById(int id)
     {
-        return studentRepository.findById(id).orElse(null);
+        return appointmentRepository.findById(id).orElse(null);
     }
     public List<Appointment> findAll()
     {
-        return studentRepository.findAll();
+        return appointmentRepository.findAll();
     }
     public void deleteById(int id)
     {
-        studentRepository.deleteById(id);
+        appointmentRepository.deleteById(id);
     }
 }
