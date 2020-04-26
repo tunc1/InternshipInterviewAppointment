@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers("/login").permitAll()
                 .antMatchers(HttpMethod.GET,"/internshipSubject/**","/appointment/**").authenticated()
                 .antMatchers(HttpMethod.PUT,"/appointment/**").authenticated()
-                .antMatchers("/teacher/**","/student/**","/appointment/**","/internship/**","/internshipSubject/**").hasAuthority("Teacher")
+                .antMatchers("/teacher/**","/student/**","/appointment/**","/internship/**","/internshipSubject/**").hasRole("Teacher")
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(tokenFilter,UsernamePasswordAuthenticationFilter.class);

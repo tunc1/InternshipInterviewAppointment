@@ -28,6 +28,6 @@ public class Teacher implements UserDetails
     private boolean accountNonExpired,accountNonLocked,enabled,credentialsNonExpired;
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
-        return List.of(new SimpleGrantedAuthority("Teacher"));
+        return List.of(new SimpleGrantedAuthority("ROLE_Teacher"));
     }
 }

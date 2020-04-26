@@ -28,6 +28,6 @@ public class Student implements UserDetails
     private boolean accountNonExpired=true,accountNonLocked=true,enabled=true,credentialsNonExpired=true;
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
-        return List.of(new SimpleGrantedAuthority("Student"));
+        return List.of(new SimpleGrantedAuthority("ROLE_Student"));
     }
 }
