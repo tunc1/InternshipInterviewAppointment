@@ -25,7 +25,7 @@ public class Teacher implements UserDetails
     private String name,surname,username;
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     private String password;
-    private boolean accountNonExpired,accountNonLocked,enabled,credentialsNonExpired;
+    private boolean accountNonExpired=true,accountNonLocked=true,enabled=true,credentialsNonExpired=true;
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
         return List.of(new SimpleGrantedAuthority("ROLE_Teacher"));
