@@ -1,8 +1,11 @@
 package app.controller;
 
 import app.entity.Internship;
+import app.entity.Student;
+import app.entity.Teacher;
 import app.service.InternshipService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,19 +28,40 @@ public class InternshipController
         internshipService.update(internship);
     }
     @GetMapping("/{id}")
-    public Internship findById(@PathVariable int id)
+    public Internship findById(@PathVariable int id,Authentication authentication)
     {
-        return internshipService.findById(id);
+        Internship internship=internshipService.findById(id);
+        if(authentication.getPrincipal() instanceof Teacher)
+            return internship;
+        else
+        {
+            Student student=(Student)authentication.getPrincipal();
+            if(internship.getStudent().getId()==student.getId())
+                return internship;
+            return null;
+        }
     }
     @GetMapping
-    public List<Internship> findAll()
+    public List<Internship> findAll(Authentication authentication)
     {
-        return internshipService.findAll();
+        if(authentication.getPrincipal() instanceof Teacher)
+            return internshipService.findAll();
+        else
+            return List.of();
     }
     @GetMapping("/student/{studentId}")
-    public List<Internship> findByStudentId(@PathVariable int studentId)
+    public List<Internship> findByStudentId(@PathVariable int studentId,Authentication authentication)
     {
-        return internshipService.findByStudentId(studentId);
+        List<Internship> internships=internshipService.findByStudentId(studentId);
+        if(authentication.getPrincipal() instanceof Teacher)
+            return internships;
+        else
+        {
+            Student student=(Student)authentication.getPrincipal();
+            if(student.getId()==studentId)
+                return internships;
+            return List.of();
+        }
     }
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable int id)
