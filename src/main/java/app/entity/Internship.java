@@ -20,6 +20,8 @@ public class Internship
     private InternshipLocation location;
     @Enumerated
     private InternshipType type;
+    @Enumerated(value=EnumType.STRING)
+    private InternshipNote note;
     @ManyToOne
     private InternshipSubject subject;
     private Date start,finish;
