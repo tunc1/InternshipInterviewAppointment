@@ -32,9 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
-                .antMatchers(HttpMethod.GET,"/internshipSubject/**","/appointment/**").authenticated()
+                .antMatchers(HttpMethod.GET,"/internshipSubject/**","/appointment/**","/announcement/**").authenticated()
                 .antMatchers(HttpMethod.PUT,"/appointment/**").authenticated()
-                .antMatchers("/teacher/**","/student/**","/appointment/**","/internship/**","/internshipSubject/**").hasRole("Teacher")
+                .antMatchers("/teacher/**","/student/**","/appointment/**","/internship/**","/internshipSubject/**","/announcement/**").hasRole("Teacher")
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(tokenFilter,UsernamePasswordAuthenticationFilter.class);
