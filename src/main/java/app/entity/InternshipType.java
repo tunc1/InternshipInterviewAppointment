@@ -9,6 +9,6 @@ import lombok.Getter;
 @Getter
 public enum InternshipType
 {
-    HARDWARE("Donanım"),SOFTWARE("Yazılım");
+    HARDWARE("Hardware"),SOFTWARE("Software");
     private String name;
 }
