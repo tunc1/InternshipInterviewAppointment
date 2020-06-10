@@ -3,7 +3,6 @@ package app.service;
 import app.entity.Teacher;
 import app.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +36,7 @@ public class TeacherService
     {
         teacherRepository.deleteById(id);
     }
-    public UserDetails findByUsername(String username)
+    public Teacher findByUsername(String username)
     {
         return teacherRepository.findByUsername(username);
     }
