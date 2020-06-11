@@ -1,8 +1,8 @@
 package app.controller;
 
+import app.entity.Student;
+import app.entity.Teacher;
 import app.security.TokenService;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,17 +23,18 @@ public class Login
     private TokenService tokenService;
     @Autowired
     private UserDetailsService userDetailsService;
-    @PostMapping
-    public String login(@RequestBody User user)
+    @PostMapping("/teacher")
+    public String teacher(@RequestBody Teacher user)
     {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
         UserDetails userDetails=userDetailsService.loadUserByUsername(user.getUsername());
         return tokenService.create(userDetails);
     }
-    @Getter
-    @Setter
-    private static class User
+    @PostMapping("/student")
+    public String student(@RequestBody Student user)
     {
-        private String username,password;
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
+        UserDetails userDetails=userDetailsService.loadUserByUsername(user.getUsername());
+        return tokenService.create(userDetails);
     }
 }
