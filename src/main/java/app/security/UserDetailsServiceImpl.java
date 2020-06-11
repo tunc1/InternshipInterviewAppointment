@@ -15,11 +15,20 @@ public class UserDetailsServiceImpl implements UserDetailsService
     private TeacherService teacherService;
     @Autowired
     private StudentService studentService;
+    private String type;
+    public void setType(String type)
+    {
+        this.type=type;
+    }
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        UserDetails userDetails=teacherService.findByUsername(username);
-        if(userDetails==null)
+        UserDetails userDetails=null;
+        if(type.equals("teacher"))
+            userDetails=teacherService.findByUsername(username);
+        else if(type.equals("student"))
             userDetails=studentService.findByUsername(username);
+        if(userDetails==null)
+            throw new UsernameNotFoundException(username);
         return userDetails;
     }
 }

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -20,18 +19,20 @@ public class TokenFilter extends OncePerRequestFilter
     @Autowired
     private TokenService tokenService;
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
     protected void doFilterInternal(HttpServletRequest request,HttpServletResponse response,FilterChain chain) throws ServletException, IOException
     {
-        String s=request.getHeader("token");
-        if(s!=null)
+        String token=request.getHeader("token");
+        if(token!=null)
         {
-            if(tokenService.validate(s))
+            if(tokenService.validate(token))
             {
-                String username=tokenService.getUsername(s);
+                String username=tokenService.get(token,"username");
+                String type=tokenService.get(token,"type");
+                userDetailsService.setType(type);
                 UserDetails userDetails=userDetailsService.loadUserByUsername(username);
-                UsernamePasswordAuthenticationToken token=new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(token);
+                UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
         chain.doFilter(request,response);

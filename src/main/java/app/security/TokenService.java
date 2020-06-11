@@ -16,14 +16,15 @@ public class TokenService
         long DAY=60*60*24*1000;
         return JWT.create()
                 .withClaim("username",userDetails.getUsername())
+                .withClaim("type",userDetails.getClass().getSimpleName().toLowerCase())
                 .withExpiresAt(new Date(System.currentTimeMillis()+DAY*30))
                 .sign(Algorithm.HMAC512(key));
     }
-    public boolean validate(String s)
+    public boolean validate(String token)
     {
         try
         {
-            JWT.require(Algorithm.HMAC512(key)).build().verify(s);
+            JWT.require(Algorithm.HMAC512(key)).build().verify(token);
             return true;
         }
         catch(Exception e)
@@ -31,8 +32,8 @@ public class TokenService
             return false;
         }
     }
-    public String getUsername(String s)
+    public String get(String token,String name)
     {
-        return JWT.decode(s).getClaim("username").asString();
+        return JWT.decode(token).getClaim(name).asString();
     }
 }
