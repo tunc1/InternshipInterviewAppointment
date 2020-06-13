@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.entity.InternshipSubject;
+import app.entity.InternshipType;
 import app.service.InternshipSubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +39,11 @@ public class InternshipSubjectController
     public void deleteById(@PathVariable int id)
     {
         internshipSubjectService.deleteById(id);
+    }
+    @GetMapping("/type/{name}")
+    public List<InternshipSubject> findByType(@PathVariable String name)
+    {
+        InternshipType type=InternshipType.creator(name);
+        return internshipSubjectService.findByType(type);
     }
 }

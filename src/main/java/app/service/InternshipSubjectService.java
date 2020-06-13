@@ -1,6 +1,7 @@
 package app.service;
 
 import app.entity.InternshipSubject;
+import app.entity.InternshipType;
 import app.repository.InternshipSubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,9 @@ public class InternshipSubjectService
     public void deleteById(int id)
     {
         internSubjectRepository.deleteById(id);
+    }
+    public List<InternshipSubject> findByType(InternshipType type)
+    {
+        return internSubjectRepository.findByType(type);
     }
 }
