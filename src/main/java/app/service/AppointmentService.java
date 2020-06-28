@@ -41,4 +41,8 @@ public class AppointmentService
     {
         return appointmentRepository.findByTeacherIdAndTakenOrderByDate(teacherId,false);
     }
+    public List<Appointment> findByStudentId(int id)
+    {
+        return appointmentRepository.findByStudentId(id);
+    }
 }

@@ -60,6 +60,11 @@ public class AppointmentController
     {
         return appointmentService.findByTeacherIdAndNotTakenOrderByDate(teacherId);
     }
+    @GetMapping("/student/{id}")
+    public List<Appointment> findByStudentId(@PathVariable int id)
+    {
+        return appointmentService.findByStudentId(id);
+    }
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable int id)
     {
