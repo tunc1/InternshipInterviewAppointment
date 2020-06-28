@@ -55,6 +55,11 @@ public class AppointmentController
         Date end=calendar.getTime();
         return appointmentService.findByDateBetween(start,end);
     }
+    @GetMapping("/teacher/{teacherId}")
+    public List<Appointment> findByTeacherIdAndNotTakenOrderByDate(@PathVariable int teacherId)
+    {
+        return appointmentService.findByTeacherIdAndNotTakenOrderByDate(teacherId);
+    }
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable int id)
     {

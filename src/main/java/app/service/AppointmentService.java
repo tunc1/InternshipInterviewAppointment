@@ -37,4 +37,8 @@ public class AppointmentService
     {
         return appointmentRepository.findByDateBetween(start,end);
     }
+    public List<Appointment> findByTeacherIdAndNotTakenOrderByDate(int teacherId)
+    {
+        return appointmentRepository.findByTeacherIdAndTakenOrderByDate(teacherId,false);
+    }
 }
