@@ -5,6 +5,7 @@ import app.repository.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -31,5 +32,9 @@ public class AppointmentService
     public void deleteById(int id)
     {
         appointmentRepository.deleteById(id);
+    }
+    public List<Appointment> findByDateBetween(Date start,Date end)
+    {
+        return appointmentRepository.findByDateBetween(start,end);
     }
 }

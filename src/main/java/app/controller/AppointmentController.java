@@ -6,6 +6,7 @@ import app.service.AppointmentService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,6 +44,16 @@ public class AppointmentController
     public List<Appointment> findAll()
     {
         return appointmentService.findAll();
+    }
+    @GetMapping("/day/{date}")
+    public List<Appointment> findByDay(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") Date start)
+    {
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(start);
+        calendar.add(Calendar.HOUR_OF_DAY,23);
+        calendar.add(Calendar.MINUTE,59);
+        Date end=calendar.getTime();
+        return appointmentService.findByDateBetween(start,end);
     }
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable int id)
