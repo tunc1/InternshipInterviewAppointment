@@ -3,8 +3,6 @@ package app.controller;
 import app.entity.Appointment;
 import app.entity.Teacher;
 import app.service.AppointmentService;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
@@ -93,12 +91,50 @@ public class AppointmentController
             }
         }
     }
-    @Getter
-    @Setter
     private static class MultipleAppointment
     {
         private Date start,end;
         private LocalTime startTime,endTime;
         private int minute;
+        public Date getStart()
+        {
+            return start;
+        }
+        public void setStart(Date start)
+        {
+            this.start=start;
+        }
+        public Date getEnd()
+        {
+            return end;
+        }
+        public void setEnd(Date end)
+        {
+            this.end=end;
+        }
+        public LocalTime getStartTime()
+        {
+            return startTime;
+        }
+        public void setStartTime(LocalTime startTime)
+        {
+            this.startTime=startTime;
+        }
+        public LocalTime getEndTime()
+        {
+            return endTime;
+        }
+        public void setEndTime(LocalTime endTime)
+        {
+            this.endTime=endTime;
+        }
+        public int getMinute()
+        {
+            return minute;
+        }
+        public void setMinute(int minute)
+        {
+            this.minute=minute;
+        }
     }
 }

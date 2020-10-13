@@ -2,7 +2,6 @@ package app.security;
 
 import app.service.StudentService;
 import app.service.TeacherService;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,7 +15,6 @@ public class UserDetailsServiceImpl implements UserDetailsService
     private TeacherService teacherService;
     @Autowired
     private StudentService studentService;
-    @Setter
     private String type;
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
@@ -28,5 +26,9 @@ public class UserDetailsServiceImpl implements UserDetailsService
         if(userDetails==null)
             throw new UsernameNotFoundException(username);
         return userDetails;
+    }
+    public void setType(String type)
+    {
+        this.type=type;
     }
 }

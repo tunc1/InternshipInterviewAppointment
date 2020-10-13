@@ -1,8 +1,5 @@
 package app.controller;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +14,20 @@ public class UserType
     {
         return new Response(authentication.getPrincipal().getClass().getSimpleName());
     }
-    @Getter
-    @Setter
-    @AllArgsConstructor
     private static class Response
     {
         private String userType;
+        public Response(String userType)
+        {
+            this.userType=userType;
+        }
+        public String getUserType()
+        {
+            return userType;
+        }
+        public void setUserType(String userType)
+        {
+            this.userType=userType;
+        }
     }
 }
