@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
@@ -39,5 +40,16 @@ public class TeacherService
     public Teacher findByUsername(String username)
     {
         return teacherRepository.findByUsername(username);
+    }
+    @PostConstruct
+    public void addNewTeacher()
+    {
+        if(!teacherRepository.existsByUsername("admin"))
+        {
+            Teacher teacher=new Teacher();
+            teacher.setUsername("admin");
+            teacher.setPassword("password");
+            save(teacher);
+        }
     }
 }
