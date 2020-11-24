@@ -72,24 +72,7 @@ public class AppointmentController
     public void saveMultiple(@RequestBody MultipleAppointment multipleAppointment,Authentication authentication)
     {
         Teacher teacher=(Teacher)authentication.getPrincipal();
-        long difference=Math.abs(multipleAppointment.start.getTime()-multipleAppointment.end.getTime());
-        long diff=TimeUnit.DAYS.convert(difference,TimeUnit.MILLISECONDS);
-        long minutes=(HOURS.between(multipleAppointment.startTime,multipleAppointment.endTime))*60/multipleAppointment.minute;
-        for(int i=0;i<diff+1;i++)
-        {
-            for(int j=0;j<minutes+1;j++)
-            {
-                Calendar calendar=Calendar.getInstance();
-                calendar.setTime(multipleAppointment.start);
-                calendar.add(Calendar.DATE,i);
-                calendar.set(Calendar.HOUR,multipleAppointment.startTime.getHour()+(j*multipleAppointment.minute)/60);
-                calendar.set(Calendar.MINUTE,multipleAppointment.minute*(j%(60/multipleAppointment.minute)));
-                Appointment appointment=new Appointment();
-                appointment.setDate(calendar.getTime());
-                appointment.setTeacher(teacher);
-                appointmentService.save(appointment);
-            }
-        }
+        appointmentService.saveMultiple(teacher,multipleAppointment.start,multipleAppointment.end,multipleAppointment.startTime,multipleAppointment.endTime,multipleAppointment.minute);
     }
     private static class MultipleAppointment
     {

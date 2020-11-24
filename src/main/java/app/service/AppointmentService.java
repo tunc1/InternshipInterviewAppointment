@@ -1,12 +1,18 @@
 package app.service;
 
 import app.entity.Appointment;
+import app.entity.Teacher;
 import app.repository.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static java.time.temporal.ChronoUnit.HOURS;
 
 @Service
 public class AppointmentService
@@ -44,5 +50,26 @@ public class AppointmentService
     public List<Appointment> findByStudentId(int id)
     {
         return appointmentRepository.findByStudentId(id);
+    }
+    public void saveMultiple(Teacher teacher,Date start,Date end,LocalTime startTime,LocalTime endTime,int minute)
+    {
+        long difference=Math.abs(start.getTime()-end.getTime());
+        long diff=TimeUnit.DAYS.convert(difference,TimeUnit.MILLISECONDS);
+        long minutes=(HOURS.between(startTime,endTime))*60/minute;
+        for(int i=0;i<diff+1;i++)
+        {
+            for(int j=0;j<minutes+1;j++)
+            {
+                Calendar calendar=Calendar.getInstance();
+                calendar.setTime(start);
+                calendar.add(Calendar.DATE,i);
+                calendar.set(Calendar.HOUR,startTime.getHour()+(j*minute)/60);
+                calendar.set(Calendar.MINUTE,minute*(j%(60/minute)));
+                Appointment appointment=new Appointment();
+                appointment.setDate(calendar.getTime());
+                appointment.setTeacher(teacher);
+                appointmentRepository.save(appointment);
+            }
+        }
     }
 }
