@@ -46,12 +46,7 @@ public class AppointmentController
     @GetMapping("/day/{date}")
     public List<Appointment> findByDay(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") Date start)
     {
-        Calendar calendar=Calendar.getInstance();
-        calendar.setTime(start);
-        calendar.add(Calendar.HOUR_OF_DAY,23);
-        calendar.add(Calendar.MINUTE,59);
-        Date end=calendar.getTime();
-        return appointmentService.findByDateBetween(start,end);
+        return appointmentService.findByDay(start);
     }
     @GetMapping("/teacher/{teacherId}")
     public List<Appointment> findByTeacherIdAndNotTakenOrderByDate(@PathVariable int teacherId)

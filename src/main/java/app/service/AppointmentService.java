@@ -72,4 +72,13 @@ public class AppointmentService
             }
         }
     }
+    public List<Appointment> findByDay(Date start)
+    {
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(start);
+        calendar.add(Calendar.HOUR_OF_DAY,23);
+        calendar.add(Calendar.MINUTE,59);
+        Date end=calendar.getTime();
+        return appointmentRepository.findByDateBetween(start,end);
+    }
 }
