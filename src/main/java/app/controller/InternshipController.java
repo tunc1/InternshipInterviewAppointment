@@ -17,8 +17,10 @@ public class InternshipController
     @Autowired
     private InternshipService internshipService;
     @PostMapping
-    public Internship save(@RequestBody Internship internship)
+    public Internship save(@RequestBody Internship internship,Authentication authentication)
     {
+        Student student=(Student)authentication.getPrincipal();
+        internship.setStudent(student);
         internshipService.save(internship);
         return internship;
     }
