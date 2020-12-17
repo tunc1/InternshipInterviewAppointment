@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static java.time.temporal.ChronoUnit.HOURS;
+import static java.time.temporal.ChronoUnit.MINUTES;
 
 @Service
 public class AppointmentService
@@ -39,10 +40,6 @@ public class AppointmentService
     {
         appointmentRepository.deleteById(id);
     }
-    public List<Appointment> findByDateBetween(Date start,Date end)
-    {
-        return appointmentRepository.findByDateBetween(start,end);
-    }
     public List<Appointment> findByTeacherIdAndNotTakenOrderByDate(int teacherId)
     {
         return appointmentRepository.findByTeacherIdAndTakenOrderByDate(teacherId,false);
@@ -53,10 +50,9 @@ public class AppointmentService
     }
     public void saveMultiple(Teacher teacher,Date start,Date end,LocalTime startTime,LocalTime endTime,int minute)
     {
-        long difference=Math.abs(start.getTime()-end.getTime());
-        long diff=TimeUnit.DAYS.convert(difference,TimeUnit.MILLISECONDS);
-        long minutes=(HOURS.between(startTime,endTime))*60/minute;
-        for(int i=0;i<diff+1;i++)
+        long days=TimeUnit.DAYS.convert(start.getTime()-end.getTime(),TimeUnit.MILLISECONDS);
+        long minutes=MINUTES.between(startTime,endTime)/minute;
+        for(int i=0;i<days+1;i++)
         {
             for(int j=0;j<minutes+1;j++)
             {
