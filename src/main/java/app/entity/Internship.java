@@ -12,8 +12,6 @@ public class Internship
     @ManyToOne
     private Student student;
     @Enumerated
-    private InternshipLocation location;
-    @Enumerated
     private InternshipType type;
     @Enumerated(value=EnumType.STRING)
     private InternshipNote note;
@@ -38,14 +36,6 @@ public class Internship
     public void setStudent(Student student)
     {
         this.student=student;
-    }
-    public InternshipLocation getLocation()
-    {
-        return location;
-    }
-    public void setLocation(InternshipLocation location)
-    {
-        this.location=location;
     }
     public InternshipType getType()
     {
