@@ -44,9 +44,9 @@ public class AppointmentController
         return appointmentService.findAll();
     }
     @GetMapping("/day/{date}")
-    public List<Appointment> findByDay(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") Date start)
+    public List<Appointment> findByDay(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") Date date)
     {
-        return appointmentService.findByDay(start);
+        return appointmentService.findByDay(date);
     }
     @GetMapping("/teacher/{teacherId}")
     public List<Appointment> findByTeacherIdAndNotTakenOrderByDate(@PathVariable int teacherId)
