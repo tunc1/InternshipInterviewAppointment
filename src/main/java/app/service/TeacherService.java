@@ -44,7 +44,7 @@ public class TeacherService
     @PostConstruct
     public void addNewTeacher()
     {
-        if(!teacherRepository.existsByUsername("admin"))
+        if(teacherRepository.count()==0)
         {
             Teacher teacher=new Teacher();
             teacher.setUsername("admin");
