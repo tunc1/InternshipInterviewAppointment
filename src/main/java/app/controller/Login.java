@@ -24,19 +24,35 @@ public class Login
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
     @PostMapping("/teacher")
-    public String teacher(@RequestBody Teacher user)
+    public TokenResponse teacher(@RequestBody Teacher user)
     {
         userDetailsService.setType("teacher");
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
         UserDetails userDetails=userDetailsService.loadUserByUsername(user.getUsername());
-        return tokenService.create(userDetails);
+        return new TokenResponse(tokenService.create(userDetails));
     }
     @PostMapping("/student")
-    public String student(@RequestBody Student user)
+    public TokenResponse student(@RequestBody Student user)
     {
         userDetailsService.setType("student");
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
         UserDetails userDetails=userDetailsService.loadUserByUsername(user.getUsername());
-        return tokenService.create(userDetails);
+        return new TokenResponse(tokenService.create(userDetails));
+    }
+}
+class TokenResponse
+{
+    private String token;
+    public TokenResponse(String token)
+    {
+        this.token=token;
+    }
+    public String getToken()
+    {
+        return token;
+    }
+    public void setToken(String token)
+    {
+        this.token=token;
     }
 }
