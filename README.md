@@ -23,6 +23,3 @@ Java, Spring Boot, Hibernate
 ```
 docker build --tag internship_interview_appointment .
 ```
-
-## Frontend Application
-https://github.com/tunc1/internship-interview-appointment-frontend
