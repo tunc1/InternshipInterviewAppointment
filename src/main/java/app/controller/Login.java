@@ -2,6 +2,7 @@ package app.controller;
 
 import app.entity.Student;
 import app.entity.Teacher;
+import app.response.TokenResponse;
 import app.security.TokenService;
 import app.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,21 +39,5 @@ public class Login
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
         UserDetails userDetails=userDetailsService.loadUserByUsername(user.getUsername());
         return new TokenResponse(tokenService.create(userDetails));
-    }
-}
-class TokenResponse
-{
-    private String token;
-    public TokenResponse(String token)
-    {
-        this.token=token;
-    }
-    public String getToken()
-    {
-        return token;
-    }
-    public void setToken(String token)
-    {
-        this.token=token;
     }
 }
