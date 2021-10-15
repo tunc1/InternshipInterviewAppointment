@@ -1,7 +1,7 @@
 package app.repository;
 
 import app.entity.InternshipSubject;
-import app.entity.InternshipType;
+import app.enums.InternshipType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

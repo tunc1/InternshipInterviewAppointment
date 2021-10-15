@@ -1,7 +1,7 @@
 package app.service;
 
 import app.entity.InternshipSubject;
-import app.entity.InternshipType;
+import app.enums.InternshipType;
 import app.repository.InternshipSubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

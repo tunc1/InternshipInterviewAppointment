@@ -1,5 +1,8 @@
 package app.entity;
 
+import app.enums.InternshipNote;
+import app.enums.InternshipType;
+
 import javax.persistence.*;
 import java.util.Date;
 

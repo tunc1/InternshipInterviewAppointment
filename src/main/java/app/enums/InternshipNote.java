@@ -1,4 +1,4 @@
-package app.entity;
+package app.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;

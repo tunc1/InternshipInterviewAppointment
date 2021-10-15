@@ -1,5 +1,7 @@
 package app.entity;
 
+import app.enums.InternshipType;
+
 import javax.persistence.*;
 
 @Entity
