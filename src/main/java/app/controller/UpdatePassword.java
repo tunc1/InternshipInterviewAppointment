@@ -1,15 +1,10 @@
 package app.controller;
 
 import app.entity.IUser;
-import app.entity.Teacher;
 import app.entity.User;
 import app.repository.UserRepository;
 import app.request.UpdatePasswordRequest;
-import app.service.TeacherService;
-import app.entity.Student;
-import app.service.StudentService;
 import org.springframework.security.core.Authentication;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +12,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/updatePassword")
 public class UpdatePassword
 {
-    @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
     private UserRepository userRepository;
+    public UpdatePassword(PasswordEncoder passwordEncoder,UserRepository userRepository)
+    {
+        this.passwordEncoder=passwordEncoder;
+        this.userRepository=userRepository;
+    }
     @PostMapping
     public boolean updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest,Authentication authentication)
     {

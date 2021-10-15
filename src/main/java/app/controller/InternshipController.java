@@ -4,7 +4,6 @@ import app.entity.Internship;
 import app.entity.Student;
 import app.entity.Teacher;
 import app.service.InternshipService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,11 @@ import java.util.List;
 @RequestMapping("/internship")
 public class InternshipController
 {
-    @Autowired
     private InternshipService internshipService;
+    public InternshipController(InternshipService internshipService)
+    {
+        this.internshipService=internshipService;
+    }
     @PostMapping
     @ResponseStatus(code=HttpStatus.CREATED)
     public Internship save(@RequestBody Internship internship,Authentication authentication)

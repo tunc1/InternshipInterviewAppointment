@@ -4,7 +4,6 @@ import app.consts.Role;
 import app.entity.Teacher;
 import app.entity.User;
 import app.repository.TeacherRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +13,13 @@ import java.util.List;
 @Service
 public class TeacherService
 {
-    @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
     private TeacherRepository teacherRepository;
+    public TeacherService(PasswordEncoder passwordEncoder,TeacherRepository teacherRepository)
+    {
+        this.passwordEncoder=passwordEncoder;
+        this.teacherRepository=teacherRepository;
+    }
     public Teacher save(Teacher teacher)
     {
         return teacherRepository.save(teacher);

@@ -2,8 +2,6 @@ package app.service;
 
 import app.entity.Student;
 import app.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +9,11 @@ import java.util.List;
 @Service
 public class StudentService
 {
-    @Autowired
     private StudentRepository studentRepository;
+    public StudentService(StudentRepository studentRepository)
+    {
+        this.studentRepository=studentRepository;
+    }
     public Student save(Student student)
     {
         return studentRepository.save(student);

@@ -6,11 +6,8 @@ import app.entity.Teacher;
 import app.repository.UserRepository;
 import app.service.StudentService;
 import app.service.TeacherService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -23,14 +20,17 @@ import java.io.IOException;
 @Component
 public class TokenFilter extends OncePerRequestFilter
 {
-    @Autowired
     private TokenService tokenService;
-    @Autowired
     private TeacherService teacherService;
-    @Autowired
     private StudentService studentService;
-    @Autowired
     private UserRepository userRepository;
+    public TokenFilter(TokenService tokenService,TeacherService teacherService,StudentService studentService,UserRepository userRepository)
+    {
+        this.tokenService=tokenService;
+        this.teacherService=teacherService;
+        this.studentService=studentService;
+        this.userRepository=userRepository;
+    }
     protected void doFilterInternal(HttpServletRequest request,HttpServletResponse response,FilterChain chain) throws ServletException, IOException
     {
         String token=request.getHeader("token");

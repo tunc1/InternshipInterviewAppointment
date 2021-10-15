@@ -1,7 +1,6 @@
 package app.service;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import app.entity.Announcement;
 import app.repository.AnnouncementRepository;
@@ -9,8 +8,11 @@ import app.repository.AnnouncementRepository;
 @Service
 public class AnnouncementService
 {
-	@Autowired
 	private AnnouncementRepository announcementRepository;
+	public AnnouncementService(AnnouncementRepository announcementRepository)
+	{
+		this.announcementRepository=announcementRepository;
+	}
 	public Announcement save(Announcement announcement)
 	{
 		return announcementRepository.save(announcement);

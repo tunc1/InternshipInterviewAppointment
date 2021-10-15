@@ -2,7 +2,6 @@ package app.service;
 
 import app.entity.Internship;
 import app.repository.InternshipRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,8 +9,11 @@ import java.util.List;
 @Service
 public class InternshipService
 {
-    @Autowired
     private InternshipRepository internshipRepository;
+    public InternshipService(InternshipRepository internshipRepository)
+    {
+        this.internshipRepository=internshipRepository;
+    }
     public Internship save(Internship internship)
     {
         return internshipRepository.save(internship);

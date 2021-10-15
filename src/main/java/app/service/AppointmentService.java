@@ -3,7 +3,6 @@ package app.service;
 import app.entity.Appointment;
 import app.entity.Teacher;
 import app.repository.AppointmentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
@@ -12,14 +11,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 @Service
 public class AppointmentService
 {
-    @Autowired
     private AppointmentRepository appointmentRepository;
+    public AppointmentService(AppointmentRepository appointmentRepository)
+    {
+        this.appointmentRepository=appointmentRepository;
+    }
     public Appointment save(Appointment appointment)
     {
         return appointmentRepository.save(appointment);

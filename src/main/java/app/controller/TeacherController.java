@@ -2,7 +2,6 @@ package app.controller;
 
 import app.entity.Teacher;
 import app.service.TeacherService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +11,11 @@ import java.util.List;
 @RequestMapping("/teacher")
 public class TeacherController
 {
-    @Autowired
     private TeacherService teacherService;
+    public TeacherController(TeacherService teacherService)
+    {
+        this.teacherService=teacherService;
+    }
     @PostMapping
     @ResponseStatus(code=HttpStatus.CREATED)
     public Teacher save(@RequestBody Teacher teacher)

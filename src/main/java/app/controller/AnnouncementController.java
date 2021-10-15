@@ -2,7 +2,6 @@ package app.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import app.entity.Announcement;
@@ -12,8 +11,11 @@ import app.service.AnnouncementService;
 @RequestMapping("/announcement")
 public class AnnouncementController
 {
-	@Autowired
 	private AnnouncementService announcementService;
+	public AnnouncementController(AnnouncementService announcementService)
+	{
+		this.announcementService=announcementService;
+	}
 	@GetMapping
 	public List<Announcement> findAll()
 	{
