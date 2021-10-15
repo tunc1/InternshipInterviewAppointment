@@ -51,8 +51,8 @@ public class InternshipController
         else
             return List.of();
     }
-    @GetMapping("/student/{studentId}")
-    public List<Internship> findByStudentId(@PathVariable int studentId,Authentication authentication)
+    @GetMapping(params="studentId")
+    public List<Internship> findByStudentId(int studentId,Authentication authentication)
     {
         List<Internship> internships=internshipService.findByStudentId(studentId);
         if(authentication.getPrincipal() instanceof Teacher)

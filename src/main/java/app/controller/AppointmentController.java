@@ -44,20 +44,20 @@ public class AppointmentController
     {
         return appointmentService.findAll();
     }
-    @GetMapping("/day/{date}")
-    public List<Appointment> findByDay(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") Date date)
+    @GetMapping(params="day")
+    public List<Appointment> findByDay(@DateTimeFormat(pattern="yyyy-MM-dd") Date day)
     {
-        return appointmentService.findByDay(date);
+        return appointmentService.findByDay(day);
     }
-    @GetMapping("/teacher/{teacherId}")
-    public List<Appointment> findByTeacherIdAndNotTakenOrderByDate(@PathVariable int teacherId)
+    @GetMapping(params="teacherId")
+    public List<Appointment> findByTeacherIdAndNotTakenOrderByDate(int teacherId)
     {
         return appointmentService.findByTeacherIdAndNotTakenOrderByDate(teacherId);
     }
-    @GetMapping("/student/{id}")
-    public List<Appointment> findByStudentId(@PathVariable int id)
+    @GetMapping(params="studentId")
+    public List<Appointment> findByStudentId(int studentId)
     {
-        return appointmentService.findByStudentId(id);
+        return appointmentService.findByStudentId(studentId);
     }
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable int id)

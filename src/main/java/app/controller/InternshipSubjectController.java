@@ -40,10 +40,9 @@ public class InternshipSubjectController
     {
         internshipSubjectService.deleteById(id);
     }
-    @GetMapping("/type/{name}")
-    public List<InternshipSubject> findByType(@PathVariable String name)
+    @GetMapping(params="type")
+    public List<InternshipSubject> findByType(String type)
     {
-        InternshipType type=InternshipType.creator(name);
-        return internshipSubjectService.findByType(type);
+        return internshipSubjectService.findByType(InternshipType.creator(type));
     }
 }
