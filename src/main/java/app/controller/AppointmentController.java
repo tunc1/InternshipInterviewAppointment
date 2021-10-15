@@ -2,6 +2,7 @@ package app.controller;
 
 import app.entity.Appointment;
 import app.entity.Teacher;
+import app.request.MultipleAppointmentRequest;
 import app.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -64,55 +65,14 @@ public class AppointmentController
         appointmentService.deleteById(id);
     }
     @PostMapping("/multiple")
-    public void saveMultiple(@RequestBody MultipleAppointment multipleAppointment,Authentication authentication)
+    public void saveMultiple(@RequestBody MultipleAppointmentRequest multipleAppointmentRequest,Authentication authentication)
     {
         Teacher teacher=(Teacher)authentication.getPrincipal();
-        appointmentService.saveMultiple(teacher,multipleAppointment.start,multipleAppointment.end,multipleAppointment.startTime,multipleAppointment.endTime,multipleAppointment.minute);
-    }
-    private static class MultipleAppointment
-    {
-        private Date start,end;
-        private LocalTime startTime,endTime;
-        private int minute;
-        public Date getStart()
-        {
-            return start;
-        }
-        public void setStart(Date start)
-        {
-            this.start=start;
-        }
-        public Date getEnd()
-        {
-            return end;
-        }
-        public void setEnd(Date end)
-        {
-            this.end=end;
-        }
-        public LocalTime getStartTime()
-        {
-            return startTime;
-        }
-        public void setStartTime(LocalTime startTime)
-        {
-            this.startTime=startTime;
-        }
-        public LocalTime getEndTime()
-        {
-            return endTime;
-        }
-        public void setEndTime(LocalTime endTime)
-        {
-            this.endTime=endTime;
-        }
-        public int getMinute()
-        {
-            return minute;
-        }
-        public void setMinute(int minute)
-        {
-            this.minute=minute;
-        }
+        appointmentService.saveMultiple(teacher
+                ,multipleAppointmentRequest.getStart()
+                ,multipleAppointmentRequest.getEnd()
+                ,multipleAppointmentRequest.getStartTime()
+                ,multipleAppointmentRequest.getEndTime()
+                ,multipleAppointmentRequest.getMinute());
     }
 }
