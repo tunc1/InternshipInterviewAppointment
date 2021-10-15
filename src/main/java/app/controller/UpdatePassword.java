@@ -21,8 +21,8 @@ public class UpdatePassword
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UserRepository userRepository;
-    @PostMapping("/teacher")
-    public boolean teacher(@RequestBody UpdatePasswordRequest updatePasswordRequest,Authentication authentication)
+    @PostMapping
+    public boolean updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest,Authentication authentication)
     {
         User user=((IUser)authentication.getPrincipal()).getUser();
 		if(passwordEncoder.matches(updatePasswordRequest.getPassword(),user.getPassword()))
