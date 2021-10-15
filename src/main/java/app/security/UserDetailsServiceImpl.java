@@ -1,5 +1,6 @@
 package app.security;
 
+import app.repository.UserRepository;
 import app.service.StudentService;
 import app.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,23 +13,12 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService
 {
     @Autowired
-    private TeacherService teacherService;
-    @Autowired
-    private StudentService studentService;
-    private String type;
+    private UserRepository userRepository;
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        UserDetails userDetails=null;
-        if(type.equals("teacher"))
-            userDetails=teacherService.findByUsername(username);
-        else if(type.equals("student"))
-            userDetails=studentService.findByUsername(username);
-        if(userDetails==null)
-            throw new UsernameNotFoundException(username);
-        return userDetails;
-    }
-    public void setType(String type)
-    {
-        this.type=type;
+        if(userRepository.existsByUsername(username))
+            return userRepository.findByUsername(username);
+        else
+            throw new UsernameNotFoundException("No user found by this username: "+username);
     }
 }

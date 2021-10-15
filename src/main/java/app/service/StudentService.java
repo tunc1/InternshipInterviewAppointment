@@ -4,7 +4,6 @@ import app.entity.Student;
 import app.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,12 +12,9 @@ import java.util.List;
 public class StudentService
 {
     @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
     private StudentRepository studentRepository;
     public void save(Student student)
     {
-        student.setPassword(passwordEncoder.encode(student.getPassword()));
         studentRepository.save(student);
     }
     public void update(Student student)
@@ -37,8 +33,8 @@ public class StudentService
     {
         studentRepository.deleteById(id);
     }
-    public UserDetails findByUsername(String username)
+    public Student findByUserUsername(String username)
     {
-        return studentRepository.findByUsername(username);
+        return studentRepository.findByUserUsername(username);
     }
 }

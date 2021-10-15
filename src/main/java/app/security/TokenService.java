@@ -1,8 +1,8 @@
 package app.security;
 
+import app.entity.User;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -11,12 +11,12 @@ import java.util.Date;
 public class TokenService
 {
     private String key="key";
-    public String create(UserDetails userDetails)
+    public String create(User user)
     {
         long DAY=60*60*24*1000;
         return JWT.create()
-                .withClaim("username",userDetails.getUsername())
-                .withClaim("type",userDetails.getClass().getSimpleName().toLowerCase())
+                .withClaim("username",user.getUsername())
+                .withClaim("role",user.getRole())
                 .withExpiresAt(new Date(System.currentTimeMillis()+DAY*30))
                 .sign(Algorithm.HMAC512(key));
     }

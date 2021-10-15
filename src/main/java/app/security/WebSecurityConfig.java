@@ -1,5 +1,6 @@
 package app.security;
 
+import app.consts.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers(HttpMethod.PUT,"/appointment/**").authenticated()
                 .antMatchers(HttpMethod.POST,"/internship/**").authenticated()
                 .antMatchers(HttpMethod.GET,"/internship/student/**").authenticated()
-                .antMatchers("/teacher/**","/student/**","/appointment/**","/internship/**","/internshipSubject/**","/announcement/**").hasRole("Teacher")
+                .antMatchers("/teacher/**","/student/**","/appointment/**","/internship/**","/internshipSubject/**","/announcement/**").hasRole(Role.TEACHER)
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and().cors().configurationSource(corsConfigurationSource());

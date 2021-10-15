@@ -1,6 +1,9 @@
 package app.controller;
 
+import app.entity.IUser;
 import app.entity.Teacher;
+import app.entity.User;
+import app.repository.UserRepository;
 import app.request.UpdatePasswordRequest;
 import app.service.TeacherService;
 import app.entity.Student;
@@ -17,29 +20,15 @@ public class UpdatePassword
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private TeacherService teacherService;
-    @Autowired
-    private StudentService studentService;
+    private UserRepository userRepository;
     @PostMapping("/teacher")
     public boolean teacher(@RequestBody UpdatePasswordRequest updatePasswordRequest,Authentication authentication)
     {
-		Teacher teacher=(Teacher)authentication.getPrincipal();
-		if(passwordEncoder.matches(updatePasswordRequest.getPassword(),teacher.getPassword()))
+        User user=((IUser)authentication.getPrincipal()).getUser();
+		if(passwordEncoder.matches(updatePasswordRequest.getPassword(),user.getPassword()))
 		{
-			teacher.setPassword(passwordEncoder.encode(updatePasswordRequest.getNewPassword()));
-			teacherService.update(teacher);
-			return true;
-		}
-        return false;
-    }
-	@PostMapping("/student")
-    public boolean student(@RequestBody UpdatePasswordRequest updatePasswordRequest,Authentication authentication)
-    {
-        Student student=(Student)authentication.getPrincipal();
-		if(passwordEncoder.matches(updatePasswordRequest.getPassword(),student.getPassword()))
-		{
-			student.setPassword(passwordEncoder.encode(updatePasswordRequest.getNewPassword()));
-			studentService.update(student);
+			user.setPassword(passwordEncoder.encode(updatePasswordRequest.getNewPassword()));
+			userRepository.save(user);
 			return true;
 		}
         return false;

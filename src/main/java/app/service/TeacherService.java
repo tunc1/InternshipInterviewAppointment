@@ -1,6 +1,8 @@
 package app.service;
 
+import app.consts.Role;
 import app.entity.Teacher;
+import app.entity.User;
 import app.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +20,6 @@ public class TeacherService
     private TeacherRepository teacherRepository;
     public void save(Teacher teacher)
     {
-        teacher.setPassword(passwordEncoder.encode(teacher.getPassword()));
         teacherRepository.save(teacher);
     }
     public void update(Teacher teacher)
@@ -37,9 +38,9 @@ public class TeacherService
     {
         teacherRepository.deleteById(id);
     }
-    public Teacher findByUsername(String username)
+    public Teacher findByUserUsername(String username)
     {
-        return teacherRepository.findByUsername(username);
+        return teacherRepository.findByUserUsername(username);
     }
     @PostConstruct
     public void addNewTeacher()
@@ -47,8 +48,11 @@ public class TeacherService
         if(teacherRepository.count()==0)
         {
             Teacher teacher=new Teacher();
-            teacher.setUsername("admin");
-            teacher.setPassword("password");
+            User user=new User();
+            user.setRole(Role.TEACHER);
+            user.setUsername("teacher");
+            user.setPassword(passwordEncoder.encode("password"));
+            teacher.setUser(user);
             save(teacher);
         }
     }

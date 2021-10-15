@@ -1,14 +1,18 @@
 package app.controller;
 
-import app.entity.Student;
-import app.entity.Teacher;
+import app.entity.User;
+import app.repository.UserRepository;
+import app.response.MessageResponse;
 import app.response.TokenResponse;
 import app.security.TokenService;
-import app.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,21 +27,23 @@ public class Login
     @Autowired
     private TokenService tokenService;
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
-    @PostMapping("/teacher")
-    public TokenResponse teacher(@RequestBody Teacher user)
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private UserRepository userRepository;
+    @PostMapping
+    public ResponseEntity login(@RequestBody User user)
     {
-        userDetailsService.setType("teacher");
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
-        UserDetails userDetails=userDetailsService.loadUserByUsername(user.getUsername());
-        return new TokenResponse(tokenService.create(userDetails));
-    }
-    @PostMapping("/student")
-    public TokenResponse student(@RequestBody Student user)
-    {
-        userDetailsService.setType("student");
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
-        UserDetails userDetails=userDetailsService.loadUserByUsername(user.getUsername());
-        return new TokenResponse(tokenService.create(userDetails));
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken=new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword());
+        try
+        {
+            authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+            User userDetails=userRepository.findByUsername(user.getUsername());
+            String token=tokenService.create(userDetails);
+            return new ResponseEntity<>(new TokenResponse(token),HttpStatus.OK);
+        }
+        catch(AuthenticationException e)
+        {
+            return new ResponseEntity<>(new MessageResponse(e.getMessage()),HttpStatus.UNAUTHORIZED);
+        }
     }
 }
