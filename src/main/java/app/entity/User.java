@@ -16,7 +16,9 @@ public class User implements UserDetails
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    private String username,role;
+    @Column(unique=true)
+    private String username;
+    private String role;
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     private String password;
     private boolean accountNonExpired=true,accountNonLocked=true,enabled=true,credentialsNonExpired=true;
