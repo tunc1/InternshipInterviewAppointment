@@ -18,13 +18,13 @@ public class TeacherService
     private PasswordEncoder passwordEncoder;
     @Autowired
     private TeacherRepository teacherRepository;
-    public void save(Teacher teacher)
+    public Teacher save(Teacher teacher)
     {
-        teacherRepository.save(teacher);
+        return teacherRepository.save(teacher);
     }
-    public void update(Teacher teacher)
+    public Teacher update(Teacher teacher)
     {
-        teacherRepository.save(teacher);
+        return teacherRepository.save(teacher);
     }
     public Teacher findById(int id)
     {

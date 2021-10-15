@@ -11,13 +11,13 @@ public class AnnouncementService
 {
 	@Autowired
 	private AnnouncementRepository announcementRepository;
-	public void save(Announcement announcement)
+	public Announcement save(Announcement announcement)
 	{
-		announcementRepository.save(announcement);
+		return announcementRepository.save(announcement);
 	}
-	public void update(Announcement announcement)
+	public Announcement update(Announcement announcement)
 	{
-		announcementRepository.save(announcement);
+		return announcementRepository.save(announcement);
 	}
 	public void deleteById(int id)
 	{

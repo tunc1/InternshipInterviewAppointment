@@ -12,13 +12,13 @@ public class InternshipService
 {
     @Autowired
     private InternshipRepository internshipRepository;
-    public void save(Internship internship)
+    public Internship save(Internship internship)
     {
-        internshipRepository.save(internship);
+        return internshipRepository.save(internship);
     }
-    public void update(Internship internship)
+    public Internship update(Internship internship)
     {
-        internshipRepository.save(internship);
+        return internshipRepository.save(internship);
     }
     public Internship findById(int id)
     {

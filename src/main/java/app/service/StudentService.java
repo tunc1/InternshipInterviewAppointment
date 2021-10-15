@@ -13,13 +13,13 @@ public class StudentService
 {
     @Autowired
     private StudentRepository studentRepository;
-    public void save(Student student)
+    public Student save(Student student)
     {
-        studentRepository.save(student);
+        return studentRepository.save(student);
     }
-    public void update(Student student)
+    public Student update(Student student)
     {
-        studentRepository.save(student);
+        return studentRepository.save(student);
     }
     public Student findById(int id)
     {

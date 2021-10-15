@@ -20,13 +20,13 @@ public class AppointmentService
 {
     @Autowired
     private AppointmentRepository appointmentRepository;
-    public void save(Appointment appointment)
+    public Appointment save(Appointment appointment)
     {
-        appointmentRepository.save(appointment);
+        return appointmentRepository.save(appointment);
     }
-    public void update(Appointment appointment)
+    public Appointment update(Appointment appointment)
     {
-        appointmentRepository.save(appointment);
+        return appointmentRepository.save(appointment);
     }
     public Appointment findById(int id)
     {
