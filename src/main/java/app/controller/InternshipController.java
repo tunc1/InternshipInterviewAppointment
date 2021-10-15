@@ -5,6 +5,7 @@ import app.entity.Student;
 import app.entity.Teacher;
 import app.service.InternshipService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,17 +18,18 @@ public class InternshipController
     @Autowired
     private InternshipService internshipService;
     @PostMapping
+    @ResponseStatus(code=HttpStatus.CREATED)
     public Internship save(@RequestBody Internship internship,Authentication authentication)
     {
         Student student=(Student)authentication.getPrincipal();
         internship.setStudent(student);
-        internshipService.save(internship);
-        return internship;
+        return internshipService.save(internship);
     }
-    @PutMapping
-    public void update(@RequestBody Internship internship)
+    @PutMapping("/{id}")
+    public Internship update(@RequestBody Internship internship,@PathVariable Integer id)
     {
-        internshipService.update(internship);
+        internship.setId(id);
+        return internshipService.update(internship);
     }
     @GetMapping("/{id}")
     public Internship findById(@PathVariable int id,Authentication authentication)
@@ -66,6 +68,7 @@ public class InternshipController
         }
     }
     @DeleteMapping("/{id}")
+    @ResponseStatus(code=HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable int id)
     {
         internshipService.deleteById(id);

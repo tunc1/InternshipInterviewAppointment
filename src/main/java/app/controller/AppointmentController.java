@@ -6,6 +6,7 @@ import app.request.MultipleAppointmentRequest;
 import app.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,15 +25,16 @@ public class AppointmentController
     @Autowired
     private AppointmentService appointmentService;
     @PostMapping
+    @ResponseStatus(code=HttpStatus.CREATED)
     public Appointment save(@RequestBody Appointment appointment)
     {
-        appointmentService.save(appointment);
-        return appointment;
+        return appointmentService.save(appointment);
     }
-    @PutMapping
-    public void update(@RequestBody Appointment appointment)
+    @PutMapping("/{id}")
+    public Appointment update(@RequestBody Appointment appointment,@PathVariable Integer id)
     {
-        appointmentService.update(appointment);
+        appointment.setId(id);
+        return appointmentService.update(appointment);
     }
     @GetMapping("/{id}")
     public Appointment findById(@PathVariable int id)
@@ -60,6 +62,7 @@ public class AppointmentController
         return appointmentService.findByStudentId(studentId);
     }
     @DeleteMapping("/{id}")
+    @ResponseStatus(code=HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable int id)
     {
         appointmentService.deleteById(id);

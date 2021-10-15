@@ -3,6 +3,7 @@ package app.controller;
 import app.entity.Student;
 import app.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,15 +15,16 @@ public class StudentController
     @Autowired
     private StudentService studentService;
     @PostMapping
+    @ResponseStatus(code=HttpStatus.CREATED)
     public Student save(@RequestBody Student student)
     {
-        studentService.save(student);
-        return student;
+        return studentService.save(student);
     }
-    @PutMapping
-    public void update(@RequestBody Student student)
+    @PutMapping("/{id}")
+    public Student update(@RequestBody Student student,@PathVariable Integer id)
     {
-        studentService.update(student);
+        student.setId(id);
+        return studentService.update(student);
     }
     @GetMapping("/{id}")
     public Student findById(@PathVariable int id)
@@ -35,6 +37,7 @@ public class StudentController
         return studentService.findAll();
     }
     @DeleteMapping("/{id}")
+    @ResponseStatus(code=HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable int id)
     {
         studentService.deleteById(id);
