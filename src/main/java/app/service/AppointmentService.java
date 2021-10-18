@@ -1,7 +1,10 @@
 package app.service;
 
 import app.entity.Appointment;
+import app.entity.IUser;
+import app.entity.Student;
 import app.entity.Teacher;
+import app.exception.UnauthorizedException;
 import app.repository.AppointmentRepository;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +32,19 @@ public class AppointmentService
     {
         return appointmentRepository.save(appointment);
     }
-    public Appointment findById(int id)
+    public Appointment findById(int id,IUser user)
     {
-        return appointmentRepository.findById(id).orElse(null);
+        Appointment appointment=appointmentRepository.findById(id).orElse(null);
+        if(user instanceof Teacher)
+            return appointment;
+        else
+        {
+            Student student=(Student)user;
+            if(student.getId()==appointment.getStudent().getId())
+                return appointment;
+            else
+                throw new UnauthorizedException();
+        }
     }
     public List<Appointment> findAll()
     {

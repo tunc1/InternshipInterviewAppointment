@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.entity.Appointment;
+import app.entity.IUser;
 import app.entity.Teacher;
 import app.request.MultipleAppointmentRequest;
 import app.service.AppointmentService;
@@ -34,9 +35,10 @@ public class AppointmentController
         return appointmentService.update(appointment);
     }
     @GetMapping("/{id}")
-    public Appointment findById(@PathVariable int id)
+    public Appointment findById(@PathVariable int id,Authentication authentication)
     {
-        return appointmentService.findById(id);
+        IUser user=(IUser)authentication.getPrincipal();
+        return appointmentService.findById(id,user);
     }
     @GetMapping
     public List<Appointment> findAll()
