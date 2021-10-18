@@ -3,6 +3,7 @@ package app.security;
 import app.entity.User;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -10,7 +11,8 @@ import java.util.Date;
 @Component
 public class TokenService
 {
-    private String key="key";
+    @Value("${jwt.key}")
+    private String key;
     public String create(User user)
     {
         long DAY=60*60*24*1000;
