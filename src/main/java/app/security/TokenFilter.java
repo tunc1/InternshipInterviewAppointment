@@ -33,26 +33,33 @@ public class TokenFilter extends OncePerRequestFilter
     }
     protected void doFilterInternal(HttpServletRequest request,HttpServletResponse response,FilterChain chain) throws ServletException, IOException
     {
-        String token=request.getHeader("token");
-        if(token!=null)
+        String authorization=request.getHeader("Authorization");
+        if(authorization!=null)
         {
-            if(tokenService.validate(token))
+            if(authorization.contains("Bearer "))
             {
-                String username=tokenService.get(token,"username");
-                if(userRepository.existsByUsername(username))
+                String token=authorization.split("Bearer ")[1];
+                if(token!=null)
                 {
-                    String role=tokenService.get(token,"role");
-                    if(role.equals(Role.TEACHER))
+                    if(tokenService.validate(token))
                     {
-                        Teacher teacher=teacherService.findByUserUsername(username);
-                        UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(teacher,null,teacher.getUser().getAuthorities());
-                        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                    }
-                    else if(role.equals(Role.STUDENT))
-                    {
-                        Student student=studentService.findByUserUsername(username);
-                        UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(student,null,student.getUser().getAuthorities());
-                        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                        String username=tokenService.get(token,"username");
+                        if(userRepository.existsByUsername(username))
+                        {
+                            String role=tokenService.get(token,"role");
+                            if(role.equals(Role.TEACHER))
+                            {
+                                Teacher teacher=teacherService.findByUserUsername(username);
+                                UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(teacher,null,teacher.getUser().getAuthorities());
+                                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                            }
+                            else if(role.equals(Role.STUDENT))
+                            {
+                                Student student=studentService.findByUserUsername(username);
+                                UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(student,null,student.getUser().getAuthorities());
+                                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                            }
+                        }
                     }
                 }
             }
