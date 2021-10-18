@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import app.entity.Announcement;
 import app.repository.AnnouncementRepository;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
 public class AnnouncementService
 {
@@ -27,7 +29,7 @@ public class AnnouncementService
 	}
 	public Announcement findById(int id)
 	{
-		return announcementRepository.findById(id).orElse(null);
+		return announcementRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 	}
 	public List<Announcement> findAll()
 	{

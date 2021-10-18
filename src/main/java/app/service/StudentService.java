@@ -4,6 +4,7 @@ import app.entity.Student;
 import app.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -24,7 +25,7 @@ public class StudentService
     }
     public Student findById(int id)
     {
-        return studentRepository.findById(id).orElse(null);
+        return studentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
     public List<Student> findAll()
     {

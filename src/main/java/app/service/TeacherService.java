@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -30,7 +31,7 @@ public class TeacherService
     }
     public Teacher findById(int id)
     {
-        return teacherRepository.findById(id).orElse(null);
+        return teacherRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
     public List<Teacher> findAll()
     {

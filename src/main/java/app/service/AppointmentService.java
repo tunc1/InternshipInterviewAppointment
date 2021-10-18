@@ -8,6 +8,7 @@ import app.exception.UnauthorizedException;
 import app.repository.AppointmentRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,7 +35,7 @@ public class AppointmentService
     }
     public Appointment findById(int id,IUser user)
     {
-        Appointment appointment=appointmentRepository.findById(id).orElse(null);
+        Appointment appointment=appointmentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         if(user instanceof Teacher)
             return appointment;
         else
