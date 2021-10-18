@@ -4,7 +4,7 @@ import app.consts.Role;
 import app.entity.Teacher;
 import app.entity.User;
 import app.repository.TeacherRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import app.util.PasswordUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -14,12 +14,12 @@ import java.util.List;
 @Service
 public class TeacherService
 {
-    private PasswordEncoder passwordEncoder;
     private TeacherRepository teacherRepository;
-    public TeacherService(PasswordEncoder passwordEncoder,TeacherRepository teacherRepository)
+    private PasswordUtil passwordUtil;
+    public TeacherService(TeacherRepository teacherRepository,PasswordUtil passwordUtil)
     {
-        this.passwordEncoder=passwordEncoder;
         this.teacherRepository=teacherRepository;
+        this.passwordUtil=passwordUtil;
     }
     public Teacher save(Teacher teacher)
     {
@@ -54,7 +54,7 @@ public class TeacherService
             User user=new User();
             user.setRole(Role.TEACHER);
             user.setUsername("teacher");
-            user.setPassword(passwordEncoder.encode("password"));
+            user.setPassword(passwordUtil.encode("password"));
             teacher.setUser(user);
             save(teacher);
         }
