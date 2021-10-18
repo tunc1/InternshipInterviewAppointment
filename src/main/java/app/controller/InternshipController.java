@@ -1,8 +1,8 @@
 package app.controller;
 
+import app.entity.IUser;
 import app.entity.Internship;
 import app.entity.Student;
-import app.entity.Teacher;
 import app.service.InternshipService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -36,38 +36,20 @@ public class InternshipController
     @GetMapping("/{id}")
     public Internship findById(@PathVariable int id,Authentication authentication)
     {
-        Internship internship=internshipService.findById(id);
-        if(authentication.getPrincipal() instanceof Teacher)
-            return internship;
-        else
-        {
-            Student student=(Student)authentication.getPrincipal();
-            if(internship.getStudent().getId()==student.getId())
-                return internship;
-            return null;
-        }
+        IUser user=(IUser)authentication.getPrincipal();
+        return internshipService.findById(id,user);
     }
     @GetMapping
     public List<Internship> findAll(Authentication authentication)
     {
-        if(authentication.getPrincipal() instanceof Teacher)
-            return internshipService.findAll();
-        else
-            return List.of();
+        IUser user=(IUser)authentication.getPrincipal();
+        return internshipService.findAll(user);
     }
     @GetMapping(params="studentId")
     public List<Internship> findByStudentId(int studentId,Authentication authentication)
     {
-        List<Internship> internships=internshipService.findByStudentId(studentId);
-        if(authentication.getPrincipal() instanceof Teacher)
-            return internships;
-        else
-        {
-            Student student=(Student)authentication.getPrincipal();
-            if(student.getId()==studentId)
-                return internships;
-            return List.of();
-        }
+        IUser user=(IUser)authentication.getPrincipal();
+        return internshipService.findByStudentId(studentId,user);
     }
     @DeleteMapping("/{id}")
     @ResponseStatus(code=HttpStatus.NO_CONTENT)
