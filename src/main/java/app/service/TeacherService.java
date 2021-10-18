@@ -5,6 +5,7 @@ import app.entity.Teacher;
 import app.entity.User;
 import app.repository.TeacherRepository;
 import app.util.PasswordUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +15,10 @@ import java.util.List;
 @Service
 public class TeacherService
 {
+    @Value("${admin.username}")
+    private String username;
+    @Value("${admin.password}")
+    private String password;
     private TeacherRepository teacherRepository;
     private PasswordUtil passwordUtil;
     public TeacherService(TeacherRepository teacherRepository,PasswordUtil passwordUtil)
@@ -53,8 +58,8 @@ public class TeacherService
             Teacher teacher=new Teacher();
             User user=new User();
             user.setRole(Role.TEACHER);
-            user.setUsername("teacher");
-            user.setPassword(passwordUtil.encode("password"));
+            user.setUsername(username);
+            user.setPassword(passwordUtil.encode(password));
             teacher.setUser(user);
             save(teacher);
         }
