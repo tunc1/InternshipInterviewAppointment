@@ -15,7 +15,7 @@ public class Internship
     private int id;
     @ManyToOne
     private Student student;
-    @Enumerated
+    @Enumerated(value=EnumType.STRING)
     private InternshipType type;
     @Enumerated(value=EnumType.STRING)
     private InternshipNote note;
