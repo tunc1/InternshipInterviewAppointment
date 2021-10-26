@@ -1,5 +1,6 @@
 package app.entity;
 
+import app.enums.InternshipLocation;
 import app.enums.InternshipNote;
 import app.enums.InternshipType;
 
@@ -18,6 +19,8 @@ public class Internship
     private InternshipType type;
     @Enumerated(value=EnumType.STRING)
     private InternshipNote note;
+    @Enumerated(value=EnumType.STRING)
+    private InternshipLocation location;
     @ManyToOne
     private InternshipSubject subject;
     private Date start,finish;
@@ -127,5 +130,13 @@ public class Internship
     public void setTakeInsurance(boolean takeInsurance)
     {
         this.takeInsurance=takeInsurance;
+    }
+    public InternshipLocation getLocation()
+    {
+        return location;
+    }
+    public void setLocation(InternshipLocation location)
+    {
+        this.location=location;
     }
 }
