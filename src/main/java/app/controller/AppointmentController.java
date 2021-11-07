@@ -4,6 +4,7 @@ import app.entity.Appointment;
 import app.entity.IUser;
 import app.entity.Teacher;
 import app.request.MultipleAppointmentRequest;
+import app.response.MessageResponse;
 import app.service.AppointmentService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -67,7 +68,8 @@ public class AppointmentController
         appointmentService.deleteById(id);
     }
     @PostMapping("/multiple")
-    public void saveMultiple(@RequestBody MultipleAppointmentRequest multipleAppointmentRequest,Authentication authentication)
+    @ResponseStatus(code=HttpStatus.CREATED)
+    public MessageResponse saveMultiple(@RequestBody MultipleAppointmentRequest multipleAppointmentRequest,Authentication authentication)
     {
         Teacher teacher=(Teacher)authentication.getPrincipal();
         appointmentService.saveMultiple(teacher
@@ -76,5 +78,6 @@ public class AppointmentController
                 ,multipleAppointmentRequest.getStartTime()
                 ,multipleAppointmentRequest.getEndTime()
                 ,multipleAppointmentRequest.getMinute());
+        return new MessageResponse("Saved");
     }
 }
