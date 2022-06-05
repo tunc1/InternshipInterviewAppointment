@@ -1,7 +1,9 @@
 package app.service;
 
+import app.consts.Role;
 import app.entity.Student;
 import app.repository.StudentRepository;
+import app.util.PasswordUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,19 +22,26 @@ class StudentServiceTest
     @Mock
     StudentRepository studentRepository;
     StudentService studentService;
+    @Mock
+    PasswordUtil passwordUtil;
 
     @BeforeEach
     void setUp()
     {
-        studentService=new StudentService(studentRepository);
+        studentService=new StudentService(studentRepository,passwordUtil);
     }
     @Test
     void save()
     {
         Student student=new Student();
+        student.setNumber("1234");
         Mockito.when(studentRepository.save(Mockito.any())).thenAnswer(e->e.getArgument(0,Student.class));
+        Mockito.when(passwordUtil.encode(Mockito.anyString())).thenReturn("encoded_password");
         Student saved=studentService.save(student);
         Assertions.assertEquals(saved,student);
+        Assertions.assertEquals(student.getNumber(),saved.getUser().getUsername());
+        Assertions.assertEquals(Role.STUDENT,saved.getUser().getRole());
+        Assertions.assertEquals("encoded_password",saved.getUser().getPassword());
     }
     @Test
     void update()
