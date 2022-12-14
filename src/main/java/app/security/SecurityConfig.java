@@ -22,12 +22,12 @@ public class SecurityConfig
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth ->
-                        auth.antMatchers("/login/**").permitAll()
-                        .antMatchers(HttpMethod.GET,"/internshipSubject/**","/appointment/**","/announcement/**").authenticated()
-                        .antMatchers(HttpMethod.PUT,"/appointment/**").authenticated()
-                        .antMatchers(HttpMethod.POST,"/internship/**").authenticated()
-                        .antMatchers(HttpMethod.GET,"/internship/student/**").authenticated()
-                        .antMatchers("/teacher/**","/student/**","/appointment/**","/internship/**","/internshipSubject/**","/announcement/**").hasRole(Role.TEACHER)
+                        auth.requestMatchers("/login/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/internshipSubject/**","/appointment/**","/announcement/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT,"/appointment/**").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/internship/**").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/internship/student/**").authenticated()
+                        .requestMatchers("/teacher/**","/student/**","/appointment/**","/internship/**","/internshipSubject/**","/announcement/**").hasRole(Role.TEACHER)
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

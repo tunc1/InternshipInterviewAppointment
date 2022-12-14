@@ -8,7 +8,7 @@ import app.exception.UnauthorizedException;
 import app.repository.InternshipRepository;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service

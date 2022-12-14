@@ -1,6 +1,4 @@
 spring:
-  application:
-    name: book-service
   datasource:
     url: jdbc:postgresql://localhost:5432/internship_interview_appointment
     username: postgres
@@ -10,7 +8,7 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 admin:
   username: teacher
   password: password

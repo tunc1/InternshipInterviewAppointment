@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import app.entity.Announcement;
 import app.repository.AnnouncementRepository;
 
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class AnnouncementService

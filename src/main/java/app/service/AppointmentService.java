@@ -8,7 +8,7 @@ import app.exception.UnauthorizedException;
 import app.repository.AppointmentRepository;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;

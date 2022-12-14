@@ -5,7 +5,7 @@ import app.enums.InternshipType;
 import app.repository.InternshipSubjectRepository;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service

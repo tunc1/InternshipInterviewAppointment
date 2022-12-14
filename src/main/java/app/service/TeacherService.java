@@ -5,11 +5,11 @@ import app.entity.Teacher;
 import app.entity.User;
 import app.repository.TeacherRepository;
 import app.util.PasswordUtil;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
